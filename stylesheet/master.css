@@ -14,5 +14,7 @@
        .square{
               @apply bg-red-500 border duration-300
        }
+
+      
        
 }
