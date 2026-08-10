@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+
+@layer components{
+       .hamLine{
+              @apply h-[2.5px] w-full bg-black duration-200 rounded-[10px]
+       }
+
+       .openHam{
+              @apply w-3/5 scale-95
+       }
+       .pic{
+              @apply p-10 border flex justify-center
+       }
+       .square{
+              @apply bg-red-500 border duration-300
+       }
+       
+}
