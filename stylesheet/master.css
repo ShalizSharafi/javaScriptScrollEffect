@@ -9,12 +9,22 @@
               @apply w-3/5 scale-95
        }
        .pic{
-              @apply p-10 border flex justify-center
+              @apply p-10  flex justify-center items-center
        }
        .square{
-              @apply bg-red-500 border duration-300
+              @apply  border duration-1000 cursor-pointer flex items-center justify-center  bg-amber-400 
        }
 
+       .overlay{
+              @apply absolute w-full h-full top-0 left-0 bg-black/30 backdrop-blur-2xl 
+       }
+
+      .opacity0{
+       @apply opacity-0 scale-75 duration-1000
+      }
+
       
+
+    
        
 }

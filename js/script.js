@@ -8,11 +8,34 @@ const square = document.querySelectorAll('.square')
        hamLine[2].classList.toggle('openHam')
  })
 
- square.forEach((val,i)=>{
-       val.style.width = randWidth(200,300) +'px'
-       val.style.height = randWidth(200,350) + 'px'
-       rotateSquare(val,i)
 
+// seeded random number generator +++++________+++++++++++??????/////////////////____==+++++++++________+++++++++++??????/////////////////
+function mulberry32(seed){
+       return function(){
+              seed |= 0
+              seed = (seed + 0x6D2B79F5) | 0
+              let t = Math.imul(seed ^ (seed >>> 15), 1 | seed)
+              t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+              return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+       }
+}
+
+
+
+ //////squares height and width +++++________+++++++++++??????/////////////////____==+++++++++________+++++++++++??????/////////////////____==+++++++++________+++++++++++??????/////////////////
+ square.forEach((val,i)=>{
+       const rand =  mulberry32(i)
+
+       val.style.width = randWidth(300,500,rand) +'px'
+       val.style.height = randWidth(350,500,rand) + 'px'
+       val.parentElement.setAttribute('data-h',val.parentElement.offsetTop)
+       val.classList.add(val.getAttribute('data-effect'))
+       rotateSquare(val,i)
+        if(i <=2){
+               val.style.visibility='visible'
+               val.style.scale='1'
+       }
+                    
        val.addEventListener('mouseenter',(e)=>{
               val.addEventListener('mousemove',removeRotate)
        })
@@ -25,27 +48,51 @@ const square = document.querySelectorAll('.square')
  })
 
 
- function randWidth(min,max){
-       return (Math.floor(Math.random()*(max - min))) + min
+ function randWidth(min,max,rand){
+       return (Math.floor(rand()*(max - min))) + min
+        
  }
+
+ //////squares height and width
+
+ //////squares rotate +++++________+++++++++++??????/////////////////____==+++++++++________+++++++++++??????/////////////////____==+++++++++________+++++++++++??????/////////////////
 
 function rotateSquare(sq,index){
        if(index %2){
               //odd squares
-              sq.style.transform='rotate(4deg)'
+              sq.style.transform='rotate(2deg)translateY(-20px)'
        }else if(index % 4 == 2 ){
               //even squares
-              sq.style.transform='rotate(-6deg)'
+              sq.style.transform='rotate(-3deg)translateY(25px)'
        }else if(index %7 == 3){
-              sq.style.transform='rotate(8deg)'
+              sq.style.transform='rotate(5deg)translateY(-10px)'
        }else if(index % 4 == 3 ){
-              sq.style.transform='rotate(3deg)'
+              sq.style.transform='rotate(4deg)translateY(30px)'
        }else{
-              sq.style.transform='rotate(-4deg)'
+              sq.style.transform='rotate(-2deg)translateY(20px)'
        }
 }
 
 
 function removeRotate(e){
-       e.target.style.transform='rotate(0deg)'
+    e.currentTarget.style.transform='rotate(0deg)translateY(0px)'
 }
+
+ //////squares rotate
+
+
+// scroll behaviour  +++++________+++++++++++??????/////////////////____==+++++++++________+++++++++++??????/////////////////____==+++++++++________+++++++++++??????/////////////////
+
+
+
+
+addEventListener('scroll',()=>{
+       let scrollT = scrollY + 400
+       square.forEach((sq,i)=>{
+              if(scrollT > sq.parentElement.getAttribute('data-h')){
+                     sq.classList.remove(sq.getAttribute('data-effect'))
+              }
+       })
+})
+
+m
